@@ -1,0 +1,3 @@
+[submodule "layers/geben"]
+	path = layers/geben
+	url = git@github.com:wordempire/spacemacs-geben.git
