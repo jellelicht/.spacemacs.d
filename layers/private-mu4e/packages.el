@@ -10,7 +10,22 @@
 ;;; Code:
 
 (defconst private-mu4e-packages
-  '(mu4e))
+  '(mu4e
+    mu4e-jump-to-list))
+
+(defun private-mu4e/init-mu4e-jump-to-list ()
+  (with-eval-after-load 'mu4e
+    (use-package mu4e-jump-to-list
+      :config
+      (progn
+        (evilified-state-evilify-map mu4e-headers-mode-map
+          :mode mu4e-headers-mode
+          :bindings
+          "bm" 'mu4e-jump-to-list)
+        (evilified-state-evilify-map mu4e-main-mode-map
+          :mode mu4e-main-mode
+          :bindings
+          "bm" 'mu4e-jump-to-list)))))
 
 (defun private-mu4e/post-init-mu4e ()
   (with-eval-after-load 'mu4e
@@ -26,11 +41,11 @@
     ;; defining 'g' as the shortcut
     (add-to-list 'mu4e-view-attachment-actions
                  '("gGuix patch apply" . guix-patch-attachment) t)
-    (add-to-list 'mu4e-bookmarks
-                 (make-mu4e-bookmark
-                  :name  "ML related"
-                  :query "flag:list AND flag:unread"
-                  :key ?m))
+    ;; (add-to-list 'mu4e-bookmarks
+    ;;              (make-mu4e-bookmark
+    ;;               :name  "ML related"
+    ;;               :query "flag:list AND flag:unread"
+    ;;               :key ?m))
 
     ;; Set up some common mu4e variables
     (setq mu4e-update-interval 300
