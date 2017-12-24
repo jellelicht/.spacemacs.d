@@ -17,7 +17,18 @@
 (defun private-rcirc/pre-init-rcirc ()
   (setq rcirc-server-alist
         '(("irc.freenode.net" :port 6697 :encryption tls
-           :channels ("#guix" "#guile" "#tribler")
+           :channels ("#guix"
+                      "#guile"
+                      "#gnunet"
+                      "#libreboot"
+                      "#emacs"
+                      "#emacs-beginners")
+           :nick "jlicht")
+          ("irc.oftc.net" :port 6697 :encryption tls
+           :channels ("#suckless")
+           :nick "jlicht")
+          ("irc.mozilla.org" :port 6697 :encryption tls
+           :channels ("#rust-beginners")
            :nick "jlicht")
           ("irc.rizon.net" :port 6697 :encryption tls
            :channels ("#gilvum")
