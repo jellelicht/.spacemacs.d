@@ -70,8 +70,7 @@ modifying the variable values."
                                                     ;; Custom Configuration layers
                                                     private-org
                                                     private-rcirc
-                                                    private-mu4e
-                                                    pdf-private-misc)
+                                                    private-mu4e)
                 dotspacemacs-additional-packages '()
                 dotspacemacs-frozen-packages '()
                 dotspacemacs-excluded-packages '()
