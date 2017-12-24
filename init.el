@@ -13,7 +13,6 @@ modifying the variable values."
                 dotspacemacs-configuration-layers '(html
                                                     ;; Chat
                                                     (rcirc :variables rcirc-enable-authinfo-support t)
-                                                    slack
                                                     ;; Checkers
                                                     spell-checking
                                                     syntax-checking
@@ -30,14 +29,16 @@ modifying the variable values."
                                                     ;; Fun
                                                     emoji
                                                     ;; Programming and markup languages
+                                                    haskell
                                                     shell-scripts
                                                     markdown
                                                     typescript
                                                     javascript
                                                     csv
                                                     yaml
-                                                    (python :variables python-shell-interpreter 'python2)
-                                                    java
+                                                    (java :variables
+                                                          gradle-use-gradlew t
+                                                          gradle-gradlew-executable "./gradlew")
                                                     emacs-lisp
                                                     latex
                                                     bibtex
@@ -45,47 +46,33 @@ modifying the variable values."
                                                     (c-c++ :variables
                                                            c-c++-default-mode-for-headers 'c-mode
                                                            c-c++-enable-clang-support t)
-                                                    (sql :variables
-                                                         sql-mysql-options '("--prompt=mysql> "))
                                                     ;; OS
-                                                    nixos
                                                     ;; Source control
                                                     git
                                                     version-control
                                                     ;; Tags
                                                     ;; Themes
-                                                    ;; colors
                                                     ;; Tools
-                                                    systemd
                                                     ansible
                                                     docker
-                                                    ;; system
-                                                    finance
-                                                    speed-reading
-                                                    (pdf-tools :variables pdf-info-epdfinfo-program "~/.guix-profile/bin/epdfinfo")
+                                                    (pdf-tools :variables
+                                                               pdf-info-epdfinfo-program "~/.guix-profile/bin/epdfinfo"
+                                                               pdf-annot-activate-created-annotations t
+                                                               )
                                                     (shell :variables
                                                            shell-default-height 30
                                                            shell-default-position 'bottom
                                                            shell-default-shell 'eshell)
-                                                    ;; restclient
-                                                    ;; ranger
-                                                    pass
                                                     ;; Web services
                                                     ;; Custom layers
-                                                    emms ;; Music ftw
-                                                    emojify
-                                                    hemingway ;; Writing ftl
-                                                    guix
                                                     solidity
                                                     tldr
-                                                    webpaste
                                                     ;; Custom Configuration layers
                                                     private-org
                                                     private-rcirc
                                                     private-mu4e
                                                     pdf-private-misc)
-                dotspacemacs-additional-packages '( ;; Due to https://github.com/bbatsov/projectile/issues/1157
-                                                   (projectile :location (recipe :fetcher github :repo "jellelicht/projectile")))
+                dotspacemacs-additional-packages '()
                 dotspacemacs-frozen-packages '()
                 dotspacemacs-excluded-packages '()
                 dotspacemacs-install-packages 'used-only))
@@ -167,7 +154,6 @@ configuration executes. This function is mostly useful for
 variables that need to be set before packages are loaded. If you
 are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  ;; TODO: documente why we need this.
   (require 'iso-transl))
 
 (defun dotspacemacs/user-config ()
@@ -202,7 +188,6 @@ package is loaded, you should place your code here."
     "h" 'eww-back-url ;; H in vimperator, because h is :help, but I think lowercase is better for us
     "l" 'eww-forward-url ;; in vimperator, L is used for consistency, but again I think lower case is nicer for us
     "r" 'eww-reload)
-
   (setq hippie-expand-try-functions-list
         '(try-expand-dabbrev
           try-expand-dabbrev-all-buffers
@@ -216,13 +201,12 @@ package is loaded, you should place your code here."
     "bb"    'eww-list-bookmarks
     "s"     'eww-view-source
     "c"     'url-cookie-list)
-  ;; (org-babel-do-load-languages
-  ;;  'org-babel-load-languages
-  ;;  '((python . t)
-  ;;    (emacs-lisp . t)))
+  (with-eval-after-load 'pdf-tools
+    (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward))
   (with-eval-after-load 'geiser-guile
     (add-to-list 'geiser-guile-load-path "~/Documents/src/guix")
     (add-to-list 'geiser-guile-load-path "~/Documents/guix-pkgs")))
+
 
 
 ;; No more custom nonsense in my init.el!
